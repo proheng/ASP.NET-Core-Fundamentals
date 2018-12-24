@@ -26,10 +26,10 @@ namespace OdeToFood
                               IGreeter greeter,
                               ILogger<Startup> logger)
         {
-            /* if (env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            } */
+            }
 
             // Use lower level of middleware implementation
             // The Use statement will only run once during the Startup
@@ -58,8 +58,14 @@ namespace OdeToFood
                 Path = "/wp"
             });
 
+
             app.Run(async (context) =>
             {
+                if (context.Request.Path.StartsWithSegments("/exception"))
+                {
+                    throw new Exception("REX Exception thrown");
+                }
+
                 var greeting = greeter.GetMessageOfTheDay();
                 await context.Response.WriteAsync(greeting);
             });
