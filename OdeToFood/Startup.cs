@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace OdeToFood
 {
@@ -20,14 +21,42 @@ namespace OdeToFood
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, 
-                              IHostingEnvironment env, 
-                              IGreeter greeter)
+        public void Configure(IApplicationBuilder app,
+                              IHostingEnvironment env,
+                              IGreeter greeter,
+                              ILogger<Startup> logger)
         {
-            if (env.IsDevelopment())
+            /* if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
+            } */
+
+            // Use lower level of middleware implementation
+            // The Use statement will only run once during the Startup
+            app.Use(request =>
+            {
+                // the following is the middleware. It will be invoked once per HTTP request.
+                return async (context) =>
+                {
+                    logger.LogInformation($"Request incoming");
+                    if (context.Request.Path.StartsWithSegments("/mym"))
+                    {
+                        await context.Response.WriteAsync("HIT!");
+                        logger.LogInformation($"Request handled");
+                    }
+                    else
+                    {
+                        await request(context);
+                        logger.LogInformation($"Response outgoing");
+                    }
+                };
+            });
+
+            // "Use" Middleware
+            app.UseWelcomePage(new WelcomePageOptions
+            {
+                Path = "/wp"
+            });
 
             app.Run(async (context) =>
             {
