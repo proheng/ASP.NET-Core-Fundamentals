@@ -26,9 +26,12 @@ namespace OdeToFood
                               IGreeter greeter,
                               ILogger<Startup> logger)
         {
+            // env can be set in lauchSettings.json
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }else{
+                app.UseExceptionHandler();
             }
 
             // Use lower level of middleware implementation
@@ -67,7 +70,7 @@ namespace OdeToFood
                 }
 
                 var greeting = greeter.GetMessageOfTheDay();
-                await context.Response.WriteAsync(greeting);
+                await context.Response.WriteAsync($"{greeting} from env.EnvironmentName - {env.EnvironmentName}");
             });
         }
     }
