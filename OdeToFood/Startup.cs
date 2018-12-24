@@ -18,6 +18,7 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,10 +37,9 @@ namespace OdeToFood
 
             // Serve static file 
             // UseDefaultFiles should be in front of UseStaticFiles so it can return index.html per default path.
-            //app.UseDefaultFiles();
-            //app.UseStaticFiles();
-            // Alternatively, it is simular as below.
-            app.UseFileServer();
+            app.UseStaticFiles(); // Only serve files when request path is exactly matched.
+
+            app.UseMvcWithDefaultRoute();
 
             // Use lower level of middleware implementation
             // The Use statement will only run once during the Startup
