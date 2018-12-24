@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -31,7 +32,9 @@ namespace OdeToFood
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }else{
+            }
+            else
+            {
                 app.UseExceptionHandler();
             }
 
@@ -39,7 +42,8 @@ namespace OdeToFood
             // UseDefaultFiles should be in front of UseStaticFiles so it can return index.html per default path.
             app.UseStaticFiles(); // Only serve files when request path is exactly matched.
 
-            app.UseMvcWithDefaultRoute();
+            app.UseMvc(ConfigurateRoutes);
+
 
             // Use lower level of middleware implementation
             // The Use statement will only run once during the Startup
@@ -77,8 +81,17 @@ namespace OdeToFood
                 }
 
                 var greeting = greeter.GetMessageOfTheDay();
-                await context.Response.WriteAsync($"{greeting} from env.EnvironmentName - {env.EnvironmentName}");
+                context.Response.ContentType = "text/plain";
+                await context.Response.WriteAsync($"Not Found");
             });
+        }
+
+        private void ConfigurateRoutes(IRouteBuilder routeBuilder)
+        {
+            // /Home/Index/4
+            // Question Mark means the parameter is optional
+            // Equal symbol means if controller is not specified, use "Home", and if action is not specified, use "Index".
+            routeBuilder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }
