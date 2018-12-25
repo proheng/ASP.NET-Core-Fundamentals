@@ -1,12 +1,13 @@
-﻿@model IEnumerable<OdeToFood.Models.Restaurant>
+﻿@model OdeToFood.ViewModels.HomeIndexViewModel
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Hello</title>
+    <title>@Model.CurrentMessage</title>
 </head>
 <body>
-    @foreach (var restaurant in Model)
+    <h1>@Model.CurrentMessage</h1>
+    @foreach (var restaurant in Model.Restaurants)
     {
         <div>
             <p>@restaurant.Name</p>
