@@ -36,12 +36,11 @@ namespace OdeToFood
                 app.UseExceptionHandler();
             }
 
+            app.UseMvc(ConfigurateRoutes);
+
             // Serve static file 
             // UseDefaultFiles should be in front of UseStaticFiles so it can return index.html per default path.
             app.UseStaticFiles(); // Only serve files when request path is exactly matched.
-
-            app.UseMvc(ConfigurateRoutes);
-
 
             // Use lower level of middleware implementation
             // The Use statement will only run once during the Startup

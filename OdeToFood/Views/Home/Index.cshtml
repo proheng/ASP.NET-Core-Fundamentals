@@ -9,10 +9,12 @@
     <h1>@Model.CurrentMessage</h1>
     @foreach (var restaurant in Model.Restaurants)
     {
-        <div>
-            <p>@restaurant.Name</p>
-            <p>The id is @restaurant.Id</p>
-        </div>
+    <div>
+        <p>@restaurant.Name</p>
+        <p>The id is @restaurant.Id</p>
+        @Html.ActionLink(restaurant.Name, "Details", "Home", new { id = restaurant.Id })
+        <a asp-action="Details" asp-controller="Home" asp-route-id="@restaurant.Id">View</a>
+    </div>
     }
 
 </body>
