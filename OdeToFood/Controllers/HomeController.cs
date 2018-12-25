@@ -8,7 +8,7 @@ namespace OdeToFood.Controllers
         public IActionResult Index()
         {
             var model = new Restaurant() { Id = 1, Name = "Rex's Pizza Place" };
-            return new ObjectResult(model);
+            return View(model);
         }
     }
 }
