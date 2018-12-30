@@ -16,7 +16,7 @@ namespace OdeToFood
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IGreeter, Greeter>();
-            services.AddScoped<IRestaurantData, InMemoryRestaurantData>(); // keep the object with the process of a HTTP Request.
+            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>(); // keep the object with the process of a HTTP Request.
             services.AddMvc();
         }
 
