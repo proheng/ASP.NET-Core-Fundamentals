@@ -22,7 +22,7 @@ namespace OdeToFood.Services
 
         public IEnumerable<Restaurant> GetAll()
         {
-            return _restaurants.OrderBy(r => r.Name); 
+            return _restaurants.OrderBy(r => r.Id); 
         }
 
         public Restaurant Get(int id)
@@ -32,7 +32,7 @@ namespace OdeToFood.Services
 
         public Restaurant Add(Restaurant newRestaurant)
         {
-            newRestaurant.Id = _restaurants.Max(r => r.Id);
+            newRestaurant.Id = _restaurants.Max(r => r.Id) + 1;
             _restaurants.Add(newRestaurant);
             return newRestaurant;
         }

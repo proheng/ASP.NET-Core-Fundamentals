@@ -4,18 +4,23 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@Model.CurrentMessage</title>
+    <style>
+        .restaurant-info{
+            border: 1px solid black;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>@Model.CurrentMessage</h1>
     @foreach (var restaurant in Model.Restaurants)
     {
-    <div>
-        <p>@restaurant.Name</p>
-        <p>The id is @restaurant.Id</p>
-        @Html.ActionLink(restaurant.Name, "Details", "Home", new { id = restaurant.Id })
+    <div class="restaurant-info">
+        <p>@restaurant.Id : @restaurant.Name</p>
         <a asp-action="Details" asp-controller="Home" asp-route-id="@restaurant.Id">View</a>
     </div>
     }
+
     <a asp-action="Create">Add Restaurant</a>
 </body>
 </html>
