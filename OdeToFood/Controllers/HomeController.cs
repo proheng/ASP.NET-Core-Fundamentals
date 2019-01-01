@@ -17,7 +17,7 @@ namespace OdeToFood.Controllers
             _restaurantData = restaurantData;
             _greet = greeter;
         }
-        
+
         public IActionResult Index()
         {
             var model = new HomeIndexViewModel
@@ -28,10 +28,10 @@ namespace OdeToFood.Controllers
             return View(model);
         }
 
-        public  IActionResult Details(int id)
+        public IActionResult Details(int id)
         {
             var model = _restaurantData.Get(id);
-            if(model == null)
+            if (model == null)
             {
                 return NotFound();
             }
@@ -41,21 +41,29 @@ namespace OdeToFood.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();      
+            return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(RestaurantEditModel model)
         {
-            var newRestaurant = new Restaurant()
+            if (this.ModelState.IsValid)
             {
-                Name = model.Name,
-                Cuisine = model.Cuisine
-            };
+                var newRestaurant = new Restaurant()
+                {
+                    Name = model.Name,
+                    Cuisine = model.Cuisine
+                };
 
-            newRestaurant = _restaurantData.Add(newRestaurant);
+                newRestaurant = _restaurantData.Add(newRestaurant);
 
-            return RedirectToAction(nameof(Details), new { id = newRestaurant.Id });
+                return RedirectToAction(nameof(Details), new { id = newRestaurant.Id });
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }
