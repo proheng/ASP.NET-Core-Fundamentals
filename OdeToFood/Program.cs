@@ -18,7 +18,7 @@ namespace OdeToFood
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+            WebHost.CreateDefaultBuilder(args) // this will inject the basic service, such as IConfiguration
+                .UseStartup<Startup>(); // So, the Startup class is injectable.
     }
 }
