@@ -9,7 +9,9 @@
     <PackageReference Include="Microsoft.AspNetCore.All" />
   </ItemGroup>
 
-   <ItemGroup>
+  <!--  <ItemGroup>
      <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" />
-   </ItemGroup>
+     This is to provide CLI for dotnet ef
+   </ItemGroup> -->
+   <!-- This is not necessary any more as "The tool 'Microsoft.EntityFrameworkCore.Tools.DotNet' is now included in the .NET Core SDK"-->
 </Project>
