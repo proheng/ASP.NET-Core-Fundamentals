@@ -31,7 +31,7 @@ namespace OdeToFood.Services
 
         public IEnumerable<Restaurant> GetAll()
         {
-            return _context.Restaurants.OrderBy(r => r.Name);
+            return _context.Restaurants.OrderBy(r => r.Id);
         }
     }
 }
