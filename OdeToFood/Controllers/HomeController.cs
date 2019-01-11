@@ -7,8 +7,8 @@ namespace OdeToFood.Controllers
 {
     public class HomeController : Controller
     {
-        private IRestaurantData _restaurantData;
-        private IGreeter _greet;
+        private readonly IRestaurantData _restaurantData;
+        private readonly IGreeter _greet;
 
         public HomeController(
             IRestaurantData restaurantData,
@@ -48,7 +48,7 @@ namespace OdeToFood.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(RestaurantEditModel model)
         {
-            if (this.ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var newRestaurant = new Restaurant()
                 {
