@@ -1,0 +1,9 @@
+﻿@* "{name}" is parameter appending to the url, like /Greeting/RexHe *@
+
+@page "{inputName}"
+@* Use razor directive to inject services *@
+@* @inject IGreeter Greeter *@
+
+@model GreetingModel
+
+<div>@Model.CurrentGreeting</div>
