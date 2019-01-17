@@ -7,14 +7,12 @@
 <h1>All Restaurant</h1>
 @foreach (var restaurant in Model.Restaurants)
 {
-    <div class="restaurant-info">
-        <p>@restaurant.Id : @restaurant.Name</p>
-        <a asp-action="Details" asp-controller="Home" asp-route-id="@restaurant.Id">View</a>
-        <a asp-page="/Restaurants/Edit" asp-route-id="@restaurant.Id">Edit</a>
-    </div>
+    @Html.Partial("_Summary", restaurant)
 }
 
-<a asp-action="Create">Add Restaurant</a>
+<div>
+    <a asp-action="Create">Add Restaurant</a>
+</div>
 
 @section footer{
     @Model.CurrentMessage
