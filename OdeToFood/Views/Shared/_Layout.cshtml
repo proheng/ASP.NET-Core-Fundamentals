@@ -14,6 +14,12 @@
     </div>
     <footer>
         @RenderSection("footer", required: false)
+        
+        @* This is like Sitecore, nesting a MVC (View Component) in the view *@
+        @await Component.InvokeAsync("Greeter"); 
+        <vc:greeter></vc:greeter>
+        @* The above two statements return the same result. *@
+        @* <vc:greeter></vc:greeter> require additional register in ViewImport.cshtml *@
     </footer>
 </body>
 </html>
