@@ -46,7 +46,8 @@ namespace OdeToFood
             }
             else
             {
-                app.UseExceptionHandler();
+                app.UseExceptionHandler("/Home/Index");
+                app.UseHsts();
             }
 
             app.UseMvc(ConfigurateRoutes);
