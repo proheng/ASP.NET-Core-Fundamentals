@@ -1,0 +1,9 @@
+[*]
+end_of_line = crlf
+insert_final_newline = false
+
+[*.{cs}]
+dotnet_sort_system_directives_first = true
+
+[*.xml]
+indent_style = space
