@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
@@ -26,6 +28,18 @@ namespace OdeToFood
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(option =>
+            {
+                option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                option.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddOpenIdConnect(options =>
+            {
+                // The bind below is assigning the matching configuration values to fields in the options object.
+                _configuration.Bind("AzureId", options);
+            })
+            .AddCookie();
+
             services.AddSingleton<IGreeter, Greeter>();
 
             services.AddDbContext<OdeToFoodDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OdeToFood")));
@@ -60,6 +74,8 @@ namespace OdeToFood
             // Serve static file 
             // UseDefaultFiles should be in front of UseStaticFiles so it can return index.html per default path.
             app.UseStaticFiles(); // Only serve files when request path is exactly matched.
+
+            app.UseAuthentication();
 
             // Use lower level of middleware implementation
             // The Use statement will only run once during the Startup
