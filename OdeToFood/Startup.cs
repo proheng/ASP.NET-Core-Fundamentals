@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OdeToFood.Data;
+using OdeToFood.Middleware;
 using OdeToFood.Services;
 using System;
 
@@ -80,7 +81,8 @@ namespace OdeToFood
             // UseDefaultFiles should be in front of UseStaticFiles so it can return index.html per default path.
             app.UseStaticFiles(); // Only serve files when request path is exactly matched.
 
-           
+            // This is a custom middleware
+            app.UseNodeModules(env.ContentRootPath);
 
             // Use lower level of middleware implementation
             // The Use statement will only run once during the Startup
@@ -109,17 +111,17 @@ namespace OdeToFood
                 Path = "/wp"
             });
 
-            app.Run(async (context) =>
-            {
-                if (context.Request.Path.StartsWithSegments("/exception"))
-                {
-                    throw new Exception("REX Exception thrown");
-                }
+            //app.Run(async (context) =>
+            //{
+            //    if (context.Request.Path.StartsWithSegments("/exception"))
+            //    {
+            //        throw new Exception("REX Exception thrown");
+            //    }
 
-                var greeting = greeter.GetMessageOfTheDay();
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync($"Not Found");
-            });
+            //    var greeting = greeter.GetMessageOfTheDay();
+            //    context.Response.ContentType = "text/plain";
+            //    await context.Response.WriteAsync($"Not Found");
+            //});
         }
 
         private void ConfigurateRoutes(IRouteBuilder routeBuilder)
