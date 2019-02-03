@@ -28,6 +28,7 @@ namespace OdeToFood
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddAuthentication(option =>
             {
                 option.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -36,7 +37,7 @@ namespace OdeToFood
             .AddOpenIdConnect(options =>
             {
                 // The bind below is assigning the matching configuration values to fields in the options object.
-                _configuration.Bind("AzureId", options);
+                _configuration.Bind("AzureAd", options);
             })
             .AddCookie();
 
@@ -54,6 +55,10 @@ namespace OdeToFood
                               IGreeter greeter,
                               ILogger<Startup> logger)
         {
+            // This needs to be at the beginning and in front of the other redirection and stuff!!!!
+            // Otherwise, it will create infinite loop redirect between website and openID provider.
+            app.UseAuthentication();
+
             // env can be set in lauchSettings.json
             if (env.IsDevelopment())
             {
@@ -75,7 +80,7 @@ namespace OdeToFood
             // UseDefaultFiles should be in front of UseStaticFiles so it can return index.html per default path.
             app.UseStaticFiles(); // Only serve files when request path is exactly matched.
 
-            app.UseAuthentication();
+           
 
             // Use lower level of middleware implementation
             // The Use statement will only run once during the Startup
