@@ -2,3 +2,5 @@ OdeToFood/obj/**
 OdeToFood/bin/**
 .vs/**
 *.user
+/OdeToFood/node_modules
+/OdeToFood/package-lock.json

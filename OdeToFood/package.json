@@ -1,0 +1,9 @@
+{
+  "name": "odetofood",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "bootstrap": "^4.2.1"
+  }
+}

@@ -20,6 +20,24 @@
         <vc:greeter></vc:greeter>
         @* The above two statements return the same result. *@
         @* <vc:greeter></vc:greeter> require additional register in ViewImport.cshtml *@
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            foreach(var identity in User.Identities)
+            {
+                <h3>@identity.Name</h3>
+                <ul>
+                    @foreach(var calm in identity.Claims)
+                    {
+                        <li>@calm.Type - @calm.Value</li>
+                    }
+                </ul>
+            }
+        }
+        else
+        {
+            <div>You are annonymous</div>
+        }
     </footer>
 </body>
 </html>
